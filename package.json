@@ -1,0 +1,19 @@
+{
+  "name": "pluggy-usdars-blue",
+  "version": "1.0.0",
+  "description": "Pluggy Full-Stack coding challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebipap/pluggy-usdars-blue.git"
+  },
+  "author": "Sebastián Papanicolau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sebipap/pluggy-usdars-blue/issues"
+  },
+  "homepage": "https://github.com/sebipap/pluggy-usdars-blue#readme"
+}
