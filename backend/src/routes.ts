@@ -1,24 +1,32 @@
-
-import { Request, Response, Router} from "express";
-import { cachedQuotes, cachedSlippage, cachedAverage }from "./services"
+import { Request, Response, Router } from "express";
+import { cachedSlippage } from "./services/cachedData";
+import { cachedAverage } from "./services/cachedData";
+import { cachedQuotes } from "./services/cachedData";
 
 const router = Router();
 
-
-
-router.get("/quotes",  (req: Request, res: Response) => {
+router.get("/quotes", async(req: Request, res: Response) => {
   try {
-    res.send(cachedQuotes());
+    res.send(await cachedQuotes());
   } catch (e) {
-    res.sendStatus(400).send({ dfdd: e });
+    res.sendStatus(400).send({ e });
   }
 });
-router.get("/average",  (req: Request, res: Response) => {
-  res.send(cachedAverage());
+
+router.get("/average", async(req: Request, res: Response) => {
+  try {
+    res.send(await cachedAverage());
+  } catch (e) {
+    res.sendStatus(400).send({ e });
+  }
 });
-router.get("/slippage",  (req: Request, res: Response) => res.send(cachedSlippage()));
 
+router.get("/slippage", async(req: Request, res: Response) => {
+  try {
+    res.send(await cachedSlippage());
+  } catch (e) {
+    res.sendStatus(400).send({ e });
+  }
+});
 
-
-
-export default router
+export default router;
