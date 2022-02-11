@@ -10,19 +10,20 @@ export const sources: DataSource[] = [
     requestHandler: ambitoApiRequest,
   },
   {
-    name: "El Cronista",
-    source: "https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB/",
-    buy_selector: "div.buy-value",
-    sell_selector: "div.sell-value",
-    requestHandler: scrape,
-  },
-  {
     name: "Dolar Hoy",
     source: "https://dolarhoy.com/",
     buy_selector: ".is-5 .compra div.val",
     sell_selector: ".is-5 .venta div.val",
     requestHandler: scrape,
   },
+  {
+    name: "El Cronista",
+    source: "https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB/",
+    buy_selector: "div.buy-value",
+    sell_selector: "div.sell-value",
+    requestHandler: scrape,
+  },
+
 
   {
     name: "Invalid Source Example",
