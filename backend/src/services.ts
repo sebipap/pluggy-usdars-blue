@@ -1,11 +1,88 @@
-import scrapeIt from "scrape-it";
+import scrapeIt, { ScrapeResult } from "scrape-it";
 import fs from "fs";
+import axios from "axios";
 
 const latestReport: FullReport = JSON.parse(
   fs.readFileSync("public/latestReport.json", "utf8")
 );
 
-console.log(latestReport)
+interface AmbitoResponse {
+  data: {
+    compra: string;
+    venta: string;
+  };
+}
+
+interface PriceData {
+  buy_price: number;
+  sell_price: number;
+}
+
+const priceToFloat = (price: string) => parseFloat(price.replace("$", ""));
+
+const ambito = {
+  name: "Ambito Financiero",
+  source: "https://mercados.ambito.com/dolar/informal/variacion",
+  buy_key: "compra",
+  sell_key: "venta",
+  getValues: async function() {
+    const priceData = await axios(
+      "https://mercados.ambito.com/dolar/informal/variacion"
+    )
+      .then(({ data }: AmbitoResponse) => ({
+        buy_price: priceToFloat(data.compra),
+        sell_price: priceToFloat(data.venta),
+      }))
+      .catch((err) => console.log(err));
+
+    
+    return priceData as PriceData;
+  },
+}
+
+const sources = [ambito
+  ,
+
+  {
+    name: "Dolar Hoy",
+    source: "https://dolarhoy.com/",
+    buy_selector: ".is-5 .compra div.val",
+    sell_selector: ".is-5 .venta div.val",
+    async getValues() {
+      return { buy_price: 2, sell_price: 3 };
+    },
+  },
+  {
+    name: "El Cronista",
+    source: "https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB/",
+    buy_selector: "div.buy-value",
+    sell_selector: "div.sell-value",
+    async getValues() {
+      const priceData = await scrapeIt(
+        "https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB/",
+        {
+          buy: "div.buy-value",
+          sell: "div.sell-value",
+        }
+      ).then((res: any) => {
+        const data: ScrapeData = res.data;
+        return {
+          buy_price: priceToFloat(data.buy),
+          sell_price: priceToFloat(data.sell),
+        };
+      }).catch(e => console.log(e));
+
+      return priceData as PriceData;
+    },
+  },
+  {
+    name: "Source without selector nor keys example",
+    source: "https://mercados.ambito.com/dolar/informal/variacion",
+    getValues() {
+      return { buy_price: 2, sell_price: 3 };
+    },
+  },
+];
 
 const arrSum = (arr: number[]) =>
   arr.reduce((last: number, current: number) => last + current);
@@ -26,62 +103,35 @@ interface DataSource {
   sell_selector?: string;
 }
 
-interface ScrapeResult {
-  data: { buy: string; sell: string };
-  body: string;
+interface ScrapeData {
+  buy: string;
+  sell: string;
 }
 
 const getQuote = async (dataSource: DataSource) => {
-  const { name, source, buy_key, sell_key, buy_selector, sell_selector } =
-    dataSource;
-
-  const { data, body }: ScrapeResult = await scrapeIt(source, {
-    buy: buy_selector || "buy",
-    sell: sell_selector || "sell",
-  });
-
-  const buy_price = data.buy || JSON.parse(body)[buy_key] || "null";
-  const sell_price = data.sell || JSON.parse(body)[sell_key] || "null";
-
-  const parsePriceToFloat = (priceStr: string) =>
-    parseFloat(priceStr.replace("$", ""));
-
   return {
-    name,
-    buy_price: parsePriceToFloat(buy_price),
-    sell_price: parsePriceToFloat(sell_price),
-    source,
+    buy_price: 2,
+    sell_price: 3,
+    name: "pepe",
+    source: "pepe.com",
   };
 };
 
-const sources = [
-  {
-    name: "Ambito Financiero",
-    source: "https://mercados.ambito.com/dolar/informal/variacion",
-    buy_key: "compra",
-    sell_key: "venta",
-  },
-
-  {
-    name: "Dolar Hoy",
-    source: "https://dolarhoy.com/",
-    buy_selector: ".is-5 .compra div.val",
-    sell_selector: ".is-5 .venta div.val",
-  },
-  {
-    name: "El Cronista",
-    source: "https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB/",
-    buy_selector: "div.buy-value",
-    sell_selector: "div.sell-value",
-  },
-  {
-    name: "Source without selector nor keys example",
-    source: "https://mercados.ambito.com/dolar/informal/variacion",
-  },
-];
-
 const quotes = async () =>
-  await Promise.all(sources.map(async (source) => await getQuote(source)));
+  await Promise.all(
+    sources.map(async ({ name, source, getValues }) => {
+      const { buy_price, sell_price }: PriceData = await getValues();
+
+      console.log(buy_price, sell_price);
+
+      return {
+        name,
+        source,
+        buy_price,
+        sell_price,
+      };
+    })
+  );
 
 interface FullQuote {
   name: String;
@@ -94,7 +144,7 @@ interface FullQuote {
 
 export const cachedQuotes = () => {
   const { fullQuotes, update } = latestReport;
-  console.log(latestReport)
+  console.log(latestReport);
   return {
     quotes: fullQuotes.map(
       ({ buy_price_slippage, sell_price_slippage, ...quote }: FullQuote) =>
@@ -194,11 +244,14 @@ const getFullReport = (quotes: Quote[]) => {
   const average: AverageValues = getAverage(quotes);
   const slippage: Slippage[] = getSlippage(quotes);
 
-  const fullQuotes: FullQuote[] = quotes.map(({ source, ...quote }: Quote) => ({
+  const isValid = ({ buy_price, sell_price }: Quote) => buy_price && sell_price;
+  const addDetails = ({ source, ...quote }: Quote) => ({
     ...quote,
     ...slippage.find(({ name }: Slippage) => quote.name == name),
     source,
-  }));
+  });
+
+  const fullQuotes: FullQuote[] = quotes.filter(isValid).map(addDetails);
 
   return {
     average,
