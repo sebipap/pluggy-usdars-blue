@@ -24,7 +24,6 @@ export const sources: DataSource[] = [
     requestHandler: scrape,
   },
 
-
   {
     name: "Invalid Source Example",
     source: "https://invalid.com",

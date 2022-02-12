@@ -8,7 +8,7 @@ const app: Application = express();
 const PORT: any = process.env.PORT || 5000;
 
 updateValues();
-setInterval(updateValues, 10000);
+setInterval(updateValues, 60000);
 
 app.use(cors({ origin: "*" }));
 app.use("/api/latestReport", express.static("public/latestReport.json"));

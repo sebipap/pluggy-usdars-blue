@@ -1,6 +1,7 @@
-import { Box, toast, useToast, useUpdateEffect } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AverageSection } from "./components/AverageSection";
+import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Nav } from "./components/Nav";
 import { QuotesSection } from "./components/QuotesSection";
@@ -57,7 +58,10 @@ const App = () => {
 
   useEffect(() => {
     updateValues();
-    setInterval(updateValues, 15000);
+    const interval = setInterval(updateValues, 15000);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -65,13 +69,23 @@ const App = () => {
       <Nav />
 
       <Hero
-        title={["Get latest ", "Blue Dollar price", " live."]}
+        title={["Get the latest ", "Blue Dollar price", " live."]}
         paragraph="Check out blue market exchange rate quotes from the best sources"
       />
 
-      <QuotesSection quotes={quotes} loading={loading} onUpdate={onUpdate} />
+      <QuotesSection {...{ quotes, loading, onUpdate }} />
 
+      {/* <SimpleGrid columns={[1, 1, 1, 2]} spacing={20} my={20} mx={[5, 5, 50]}> */}
       <AverageSection {...{ average, loading, onUpdate, lastUpdate }} />
+      {/* <></>
+      </SimpleGrid> */}
+
+      {/* <SimpleGrid columns={[1, 1, 1, 2]} spacing={20} my={20} mx={[5, 5, 50]}>
+          <Box />
+        <AverageSection {...{ average, loading, onUpdate, lastUpdate }} />
+      </SimpleGrid> */}
+
+      <Footer />
     </Box>
   );
 };

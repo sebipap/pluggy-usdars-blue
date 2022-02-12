@@ -1,11 +1,6 @@
 import {
   Box,
-  Button,
   Heading,
-  Icon,
-  Image,
-  Progress,
-  SkeletonCircle,
   Stack,
   Text,
   useColorModeValue,

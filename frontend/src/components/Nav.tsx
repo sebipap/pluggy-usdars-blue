@@ -3,17 +3,14 @@ import {
   Box,
   Flex,
   useColorModeValue,
-  VisuallyHidden,
   HStack,
   Button,
   useDisclosure,
   VStack,
   IconButton,
   CloseButton,
-  Heading,
   Image,
   Text,
-  MenuIcon,
   useColorMode,
 } from "@chakra-ui/react";
 import {
@@ -30,14 +27,7 @@ export const Nav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <chakra.header
-      bg={bg}
-      m={4}
-      px={{ base: 2, sm: 4 }}
-      py={4}
-      //       shadow="md"
-      rounded="lg"
-    >
+    <chakra.header bg={bg} m={4} px={{ base: 2, sm: 4 }} py={4} rounded="lg">
       <Flex alignItems="center" justifyContent="space-between" mx="auto">
         <HStack p="2" spacing={5}>
           <Image
@@ -54,9 +44,11 @@ export const Nav = () => {
             display={{ base: "none", md: "inline-flex" }}
           >
             <IconButton
-              aria-label={`Change theme to ${colorMode == "dark" ? "light" : "dark"}` }
+              aria-label={`Change theme to ${
+                colorMode === "dark" ? "light" : "dark"
+              }`}
               onClick={toggleColorMode}
-              icon={colorMode == "dark" ? <MoonIcon /> : <SunIcon />}
+              icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
             />
 
             <Button rightIcon={<TriangleDownIcon />}>English</Button>
@@ -92,7 +84,14 @@ export const Nav = () => {
                 aria-label="Close menu"
                 onClick={mobileNav.onClose}
               />
-              <Button>Change Language</Button>
+
+              <IconButton
+                aria-label={`Change theme to ${
+                  colorMode === "dark" ? "light" : "dark"
+                }`}
+                onClick={toggleColorMode}
+                icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
+              />
             </VStack>
           </Box>
         </HStack>
