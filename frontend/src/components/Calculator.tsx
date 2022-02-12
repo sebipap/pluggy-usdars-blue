@@ -6,7 +6,6 @@ import {
   Text,
   VStack,
   Spinner,
-  SimpleGrid,
   Center,
   Input,
 } from "@chakra-ui/react";
@@ -70,7 +69,7 @@ const PriceInput = ({
 
 const Arrow = ({ direction }: { direction: string }) => (
   <Box pb={"10px"}>
-    {direction == "up" ? (
+    {direction === "up" ? (
       <ArrowUpIcon w={7} h={7} />
     ) : (
       <ArrowDownIcon w={7} h={7} />

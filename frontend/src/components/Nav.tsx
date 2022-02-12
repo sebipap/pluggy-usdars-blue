@@ -4,7 +4,6 @@ import {
   Flex,
   useColorModeValue,
   HStack,
-  Button,
   useDisclosure,
   VStack,
   IconButton,
@@ -17,7 +16,6 @@ import {
   HamburgerIcon,
   MoonIcon,
   SunIcon,
-  TriangleDownIcon,
 } from "@chakra-ui/icons";
 
 export const Nav = () => {
