@@ -28,7 +28,7 @@ export const QuoteCard = ({
     sell_price_slippage,
   } = quote;
 
-  const imgURL = iconsRoot + name.replace(/\s/, "").toLowerCase() + ".png";
+  const imgURL = `${iconsRoot}/${name.replace(/\s/, "").toLowerCase()}.png`;
 
   return (
     <CardWrapper imgURL={imgURL}>

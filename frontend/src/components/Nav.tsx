@@ -51,7 +51,7 @@ export const Nav = () => {
               icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
             />
 
-            <Button rightIcon={<TriangleDownIcon />}>English</Button>
+            {/* <Button rightIcon={<TriangleDownIcon />}>English</Button> */}
           </HStack>
 
           <Box display={{ base: "inline-flex", md: "none" }}>

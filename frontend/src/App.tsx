@@ -1,11 +1,12 @@
-import { Box, useToast } from "@chakra-ui/react";
+import { Box, SimpleGrid, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AverageSection } from "./components/AverageSection";
+import { Calculator } from "./components/Calculator";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Nav } from "./components/Nav";
 import { QuotesSection } from "./components/QuotesSection";
-import { server } from "./config";
+import { api } from "./config";
 import { Average, Quote, ReportResponse } from "./types";
 
 const defaultAvg: Average = { average_buy_price: 0, average_sell_price: 0 };
@@ -28,7 +29,7 @@ const App = () => {
   const toast = useToast();
 
   const getData = (endpoint: string) =>
-    fetch(server + endpoint).then((res) => res.json());
+    fetch(api + "/" + endpoint).then((res) => res.json());
 
   const updateEffect = () => {
     setLoading(false);
@@ -75,15 +76,15 @@ const App = () => {
 
       <QuotesSection {...{ quotes, loading, onUpdate }} />
 
-      {/* <SimpleGrid columns={[1, 1, 1, 2]} spacing={20} my={20} mx={[5, 5, 50]}> */}
-      <AverageSection {...{ average, loading, onUpdate, lastUpdate }} />
-      {/* <></>
-      </SimpleGrid> */}
-
-      {/* <SimpleGrid columns={[1, 1, 1, 2]} spacing={20} my={20} mx={[5, 5, 50]}>
-          <Box />
+      <SimpleGrid
+        columns={[1, 1, 1, 2]}
+        spacing={[5, 20]}
+        my={"100px"}
+        mx={["5%", "10%"]}
+      >
         <AverageSection {...{ average, loading, onUpdate, lastUpdate }} />
-      </SimpleGrid> */}
+        <Calculator {...{ average, loading }} />
+      </SimpleGrid>
 
       <Footer />
     </Box>

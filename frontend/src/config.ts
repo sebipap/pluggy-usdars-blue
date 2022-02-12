@@ -1,2 +1,3 @@
-export const server: string = "http://localhost:5000/api/"
-export const iconsRoot: string = "http://localhost:5000/icons/"
+const server = process.env.REACT_APP_API_SERVER_URL
+export const api: string = server + "/api"
+export const iconsRoot: string = server + "/icons"
