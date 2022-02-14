@@ -1,0 +1,27 @@
+{
+  "routes": [
+
+    {
+      "src": "/quotes",
+      "methods": ["GET"],
+      "dest": "/api/quotes.ts"
+    },
+    {
+      "src": "/average",
+      "methods": ["GET"],
+      "dest": "/api/average.ts"
+    },
+    {
+      "src": "/slippage",
+      "methods": ["GET"],
+      "dest": "/api/slippage.ts"
+    }
+    ,
+    {
+      "src": "/fullReport",
+      "methods": ["GET"],
+      "dest": "/api/fullReport.ts"
+    }
+    
+  ]
+}
