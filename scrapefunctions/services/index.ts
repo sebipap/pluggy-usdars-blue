@@ -1,30 +1,33 @@
 import { sources } from "./dataSources";
 import { arrAverage, percentageDiff } from "./scripts/math";
-import { AverageValues, DataSource, FullQuote, PriceDataResponse, Quote, Slippage } from "../types";
+import {
+  AverageValues,
+  DataSource,
+  FullQuote,
+  PriceDataResponse,
+  Quote,
+  Slippage,
+} from "../types";
 
+export const getQuotes = async () => {
 
-export const getQuotes = async () =>
-  await Promise.all(
+  const isValid = ({ buy_price, sell_price }: Quote) => buy_price && sell_price;
+
+  const quotePromises = Promise.all(
     sources.map(async (source: DataSource) => {
-      const priceData: PriceDataResponse = await source.requestHandler(source);
+      const priceData = await source.requestHandler(source);
 
-      if (priceData) {
-        return {
-          name: source.name,
-          source: source.source,
-          buy_price: priceData.buy_price,
-          sell_price: priceData.sell_price,
-        };
-      } else {
-        return {
-          name: source.name,
-          source: source.source,
-          buy_price: null,
-          sell_price: null,
-        };
-      }
+      return {
+        name: source.name,
+        source: source.source,
+        buy_price: priceData.buy_price,
+        sell_price: priceData.sell_price,
+      };
     })
   );
+
+  return (await quotePromises).filter(isValid);
+};
 
 export const getAverage = async () => {
   const quotes = await getQuotes();
@@ -64,22 +67,20 @@ const slippageOf = (quotes: Quote[]) => {
 
 export const getFullReport = async () => {
   const quotesArr: Quote[] = await getQuotes();
-  return(fullReportOf(quotesArr));
+  return fullReportOf(quotesArr);
 };
-
 
 const fullReportOf = (quotes: Quote[]) => {
   const average: AverageValues = averageOf(quotes);
   const slippage: Slippage[] = slippageOf(quotes);
 
-  const isValid = ({ buy_price, sell_price }: Quote) => buy_price && sell_price;
   const addDetails = ({ source, ...quote }: Quote) => ({
     ...quote,
     ...slippage.find(({ name }: Slippage) => quote.name == name),
     source,
   });
 
-  const fullQuotes: FullQuote[] = quotes.filter(isValid).map(addDetails);
+  const fullQuotes = quotes.map(addDetails);
 
   return {
     average,
@@ -87,4 +88,3 @@ const fullReportOf = (quotes: Quote[]) => {
     update: new Date().toLocaleString("sp-AR"),
   };
 };
-

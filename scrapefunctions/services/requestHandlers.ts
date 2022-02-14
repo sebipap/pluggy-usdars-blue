@@ -1,5 +1,5 @@
-import axios from "axios";
-import scrapeIt from "scrape-it";
+import axios, { AxiosResponse } from "axios";
+const scrapeIt = require("scrape-it")
 import { PriceData } from "../types";
 import { DataSource } from "../types";
 
@@ -8,12 +8,7 @@ interface ScrapeData {
   sell: string;
 }
 
-interface AmbitoResponse {
-  data: {
-    compra: string;
-    venta: string;
-  };
-}
+
 
 const priceToFloat = (price: string) => parseFloat(price.replace("$", ""));
 
@@ -26,7 +21,7 @@ export const scrape = async (dataSource: DataSource) => {
     buy: buy_selector,
     sell: sell_selector,
   })
-    .then((res) => {
+    .then((res: any) => {
       const { buy, sell }: ScrapeData = res.data;
 
       const priceData: PriceData = {
@@ -39,18 +34,21 @@ export const scrape = async (dataSource: DataSource) => {
       );
       return priceData;
     })
-    .catch((e: error) => {
+    .catch((e: any) => {
       console.log(`❌ ${name}: scrape error \n ${e} `);
-      return false;
+      return {
+        buy_price: 0,
+        sell_price: 0,
+      };
     });
 
-  return priceData as PriceData;
+  return priceData;
 };
 
 export const ambitoApiRequest = async ({ name, source }: DataSource) => {
   console.log(`⏳ attemping ${name} `);
   const priceData = await axios(source)
-    .then((res: AmbitoResponse) => {
+    .then((res: AxiosResponse) => {
       const { compra, venta } = res.data;
       const priceData: PriceData = {
         buy_price: priceToFloat(compra),
@@ -64,8 +62,11 @@ export const ambitoApiRequest = async ({ name, source }: DataSource) => {
     })
     .catch((e) => {
       console.log(`❌ ${name}: parse error \n ${e} `);
-      return false;
+      return {
+        buy_price: 0,
+        sell_price: 0,
+      };
     });
 
-  return priceData as PriceData;
+  return priceData ;
 };

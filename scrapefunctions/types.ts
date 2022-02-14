@@ -1,4 +1,4 @@
-type ValueGetter = (obj: DataSource) => Promise<PriceData>;
+type ValueGetter = (obj: DataSource) => Promise<PriceData>
 
 export type PriceDataResponse = PriceData | boolean;
 
@@ -12,8 +12,8 @@ export interface DataSource {
   requestHandler: ValueGetter;
 }
 export interface PriceData {
-  buy_price: number;
-  sell_price: number;
+  buy_price: number ;
+  sell_price: number ;
 }
 
 export interface FullQuote {
@@ -27,8 +27,8 @@ export interface FullQuote {
 
 export interface Quote {
   name: string;
-  buy_price: number;
-  sell_price: number;
+  buy_price: number ;
+  sell_price: number ;
   source: string;
 }
 
