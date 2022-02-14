@@ -8,7 +8,7 @@ export const LoadingCard = () => (
         thickness="10px"
         speed="0.65s"
         emptyColor="gray.200"
-        color="darkpurple"
+        color="mypurple2"
         position={"absolute"}
         top="40%"
         size={"xl"}

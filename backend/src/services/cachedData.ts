@@ -1,6 +1,6 @@
 import { FullQuote, FullReport } from "../types";
 import fs from "fs";
-import { getFullReport, updateValues } from "./index";
+import {updateValues } from "./updateValues";
 
 const latestReport = async() => {
   let report: FullReport 
@@ -8,8 +8,9 @@ const latestReport = async() => {
     report = JSON.parse(fs.readFileSync("public/latestReport.json", "utf8"))
   } catch (e) {
     console.log("No report found, reloading")
-    report = await getFullReport()
     updateValues()
+    report = JSON.parse(fs.readFileSync("public/latestReport.json", "utf8"))
+
   }
   return report
 };

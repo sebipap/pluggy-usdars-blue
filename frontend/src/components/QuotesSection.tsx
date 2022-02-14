@@ -12,13 +12,13 @@ export const QuotesSection = ({quotes, loading, onUpdate} : {quotes: Quote[], lo
     <>
       <Box
         bgGradient={
-          "linear(to bottom right, transparent 49.5% , lightpurple 50%)"
+          "linear(to bottom right, transparent 49.5% , mypurple1 50%)"
         }
         h={125}
         mt={"calc(100px * -1)"}
       />
       <Box
-        bgGradient={"linear(to bottom, lightpurple , darkpurple)"}
+        bgGradient={"linear(to bottom, mypurple1 , mypurple2)"}
         pb={0}
       >{children}</Box>
       

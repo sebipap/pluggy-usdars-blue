@@ -2,7 +2,7 @@ import cors from "cors";
 import express, { Application} from "express";
 
 import apiRoute from "./routes";
-import { updateValues } from "./services";
+import { updateValues } from "./services/updateValues";
 
 const app: Application = express();
 const PORT: any = process.env.PORT || 5000;

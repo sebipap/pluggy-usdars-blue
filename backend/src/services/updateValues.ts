@@ -1,6 +1,13 @@
 import fs from "fs";
-
+import axios from "axios";
 import { FullReport } from "../types";
+
+export const updateValues = async () => {
+  await axios("https://vercel-sl-sebipap.vercel.app/fullReport")
+    .then((res: any) => updateCache(res.data))
+    .catch((err: any) => console.log(err));
+};
+
 
 export const updateCache = (fullReport: FullReport) => {
   fs.writeFile(

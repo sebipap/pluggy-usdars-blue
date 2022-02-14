@@ -17,9 +17,9 @@ export const Hero = ({ title, paragraph }: Heroprops) => {
       w={{ base: "full", md: 11 / 12, xl: 9 / 12 }}
       mx="auto"
       textAlign={{ base: "left", md: "center" }}
-      mb={100}
       px={8}
-      my={200}
+      mt={{ base: 50, md: 200 }}
+      mb={200}
     >
       <Heading
         mb={6}

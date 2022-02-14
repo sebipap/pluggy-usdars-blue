@@ -5,7 +5,7 @@ import { cachedQuotes } from "./services/cachedData";
 
 const router = Router();
 
-router.get("/quotes", async(req: Request, res: Response) => {
+router.get("/quotes", async (req: Request, res: Response) => {
   try {
     res.send(await cachedQuotes());
   } catch (e) {
@@ -13,7 +13,7 @@ router.get("/quotes", async(req: Request, res: Response) => {
   }
 });
 
-router.get("/average", async(req: Request, res: Response) => {
+router.get("/average", async (req: Request, res: Response) => {
   try {
     res.send(await cachedAverage());
   } catch (e) {
@@ -21,7 +21,7 @@ router.get("/average", async(req: Request, res: Response) => {
   }
 });
 
-router.get("/slippage", async(req: Request, res: Response) => {
+router.get("/slippage", async (req: Request, res: Response) => {
   try {
     res.send(await cachedSlippage());
   } catch (e) {

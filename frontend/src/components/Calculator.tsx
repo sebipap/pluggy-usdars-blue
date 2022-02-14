@@ -20,7 +20,7 @@ const PriceWrapper = ({ children }: { children: ReactNode }) => {
       mb={4}
       borderWidth="1px"
       alignSelf={{ base: "center", lg: "flex-start" }}
-      borderColor={"azul"}
+      borderColor={"mybluetext"}
       borderRadius={"xl"}
     >
       {children}
@@ -43,16 +43,16 @@ const PriceInput = ({
     <Center>
       <PriceWrapper>
         <Box py={4} px={12}>
-          <Text color="azul" fontWeight="500" fontSize="2xl">
+          <Text color="mybluetext" fontWeight="500" fontSize="2xl">
             {name}
           </Text>
           <HStack justifyContent="center">
-            <Text color="azul" fontSize="3xl" fontWeight="600">
+            <Text color="mybluetext" fontSize="3xl" fontWeight="600">
               $
             </Text>
             <Input
               type={"text"}
-              color="azul"
+              color="mybluetext"
               fontSize={"4xl"}
               fontWeight="900"
               variant={"unstyled"}
@@ -110,9 +110,9 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
       px={12}
       pt={12}
       rounded="lg"
-      bg={"specialBlue"}
+      bg={"myblue"}
       borderWidth="1px"
-      borderColor={"azul"}
+      borderColor={"mybluetext"}
       shadow={useColorModeValue("#91ffed -1px 0px 50px 3px", "#004338 -1px 0px 50px 3px")}
       
     >
@@ -121,7 +121,7 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
           <Spinner
             thickness="10px"
             speed="0.65s"
-            color="azul"
+            color="mybluetext"
             top="40%"
             size={"xl"}
           />
@@ -129,11 +129,11 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
       ) : (
         <>
           <VStack spacing={2} textAlign="center">
-            <Heading size="xl" color="azul" fontSize="4xl">
+            <Heading size="xl" color="mybluetext" fontSize="4xl">
               Converter
             </Heading>
 
-            <Text fontSize="lg" color="azul">
+            <Text fontSize="lg" color="mybluetext">
               Convert USD to ARS and vice-versa
             </Text>
           </VStack>
