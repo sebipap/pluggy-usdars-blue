@@ -26,7 +26,7 @@ export const scrape = async (dataSource: DataSource) => {
     buy: buy_selector,
     sell: sell_selector,
   })
-    .then((res: any) => {
+    .then((res) => {
       const { buy, sell }: ScrapeData = res.data;
 
       const priceData: PriceData = {
@@ -39,7 +39,7 @@ export const scrape = async (dataSource: DataSource) => {
       );
       return priceData;
     })
-    .catch((e) => {
+    .catch((e: error) => {
       console.log(`❌ ${name}: scrape error \n ${e} `);
       return false;
     });

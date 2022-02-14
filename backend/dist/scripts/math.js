@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.percentageDiff = exports.arrAverage = exports.arrSum = void 0;
-const arrSum = (arr) => arr.reduce((last, current) => last + current);
+const arrSum = (arr) => arr.reduce((last, current) => last + current) || 0;
 exports.arrSum = arrSum;
 const arrAverage = (arr) => {
     const numbersArray = arr.filter((val) => val);
-    return (0, exports.arrSum)(numbersArray) / numbersArray.length;
+    return (0, exports.arrSum)(numbersArray) / numbersArray.length || 0;
 };
 exports.arrAverage = arrAverage;
 const percentageDiff = (first, second) => ((first - second) / second) * 100;

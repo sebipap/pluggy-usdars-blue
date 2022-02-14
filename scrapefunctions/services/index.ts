@@ -1,6 +1,6 @@
 import { sources } from "./dataSources";
 import { arrAverage, percentageDiff } from "./scripts/math";
-import { AverageValues, DataSource, FullQuote, PriceDataResponse, Quote, Slippage } from "./types";
+import { AverageValues, DataSource, FullQuote, PriceDataResponse, Quote, Slippage } from "../types";
 
 
 export const getQuotes = async () =>

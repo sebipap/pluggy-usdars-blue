@@ -25,7 +25,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cachedSlippage = exports.cachedAverage = exports.cachedQuotes = void 0;
 const fs_1 = __importDefault(require("fs"));
-const index_1 = require("./index");
+const updateValues_1 = require("./updateValues");
 const latestReport = () => __awaiter(void 0, void 0, void 0, function* () {
     let report;
     try {
@@ -33,8 +33,8 @@ const latestReport = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (e) {
         console.log("No report found, reloading");
-        report = yield (0, index_1.getFullReport)();
-        (0, index_1.updateValues)();
+        (0, updateValues_1.updateValues)();
+        report = JSON.parse(fs_1.default.readFileSync("public/latestReport.json", "utf8"));
     }
     return report;
 });
