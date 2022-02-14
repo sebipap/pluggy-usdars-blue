@@ -38,7 +38,6 @@ const App = () => {
   };
 
   const updateValues = () => {
-    updateEffect();
 
     getData("latestreport").then((res) => {
       const report: ReportResponse = res;
@@ -46,6 +45,8 @@ const App = () => {
         setAverage(report.average);
         setQuotes(report.fullQuotes);
         setLastUpdate(report.update);
+        updateEffect();
+
       } else {
         toast({
           title: "Failed to fetch data!",
@@ -55,6 +56,7 @@ const App = () => {
         });
       }
     });
+
   };
 
   useEffect(() => {

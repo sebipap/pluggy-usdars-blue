@@ -8,6 +8,7 @@ import {
   Spinner,
   Center,
   Input,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Average } from "../types";
 import { toInteger } from "lodash";
@@ -112,17 +113,15 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
       bg={"specialBlue"}
       borderWidth="1px"
       borderColor={"azul"}
-      shadow="xl"
-
-
+      shadow={useColorModeValue("#91ffed -1px 0px 50px 3px", "#004338 -1px 0px 50px 3px")}
+      
     >
       {loading ? (
         <Center>
           <Spinner
             thickness="10px"
             speed="0.65s"
-            emptyColor="brandpink"
-            color="brandtext"
+            color="azul"
             top="40%"
             size={"xl"}
           />

@@ -8,6 +8,7 @@ import {
   Spinner,
   SimpleGrid,
   Center,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Average } from "../types";
 
@@ -84,7 +85,7 @@ export const AverageSection = ({
       borderWidth="1px"
       borderColor={"brandtext"}
       h={"fit-content"}
-      shadow="xl"
+      shadow={useColorModeValue("#ffb0f1 -1px 0px 50px 3px", "#320046 -1px 0px 50px 3px")}
 
     >
       {loading ? (
@@ -92,7 +93,6 @@ export const AverageSection = ({
           <Spinner
             thickness="10px"
             speed="0.65s"
-            emptyColor="brandpink"
             color="brandtext"
             top="40%"
             size={"xl"}
