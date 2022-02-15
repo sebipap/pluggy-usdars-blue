@@ -13,6 +13,8 @@ import {
 import { Average } from "../types";
 import { toInteger } from "lodash";
 import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { useReport } from "../useReport";
+import { Error } from "./Error";
 
 const PriceWrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -78,14 +80,13 @@ const Arrow = ({ direction }: { direction: string }) => (
   </Box>
 );
 
-interface CalculatorData {
-  average: Average;
-  loading: boolean;
-}
+export const Calculator = () => {
+  const { data, isLoading, isError } = useReport();
 
-export const Calculator = ({ average, loading }: CalculatorData) => {
-  const avgBuy = average.average_buy_price;
-  const avgSell = average.average_sell_price;
+  const average = data && data.average
+
+  const avgBuy = average?.average_buy_price;
+  const avgSell = average?.average_sell_price;
   const avgAverage = (avgBuy + avgSell) / 2;
 
   const [ars, setArs] = useState(0);
@@ -105,6 +106,7 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
     setArs(usdAmount * avgAverage);
   };
 
+
   return (
     <Box
       px={12}
@@ -113,10 +115,12 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
       bg={"myblue"}
       borderWidth="1px"
       borderColor={"mybluetext"}
-      shadow={useColorModeValue("#91ffed -1px 0px 50px 3px", "#004338 -1px 0px 50px 3px")}
-      
+      shadow={useColorModeValue(
+        "#91ffed -1px 0px 50px 3px",
+        "#004338 -1px 0px 50px 3px"
+      )}
     >
-      {loading ? (
+      {isLoading ? (
         <Center>
           <Spinner
             thickness="10px"
@@ -126,7 +130,7 @@ export const Calculator = ({ average, loading }: CalculatorData) => {
             size={"xl"}
           />
         </Center>
-      ) : (
+      ) : isError? <Error/> : (
         <>
           <VStack spacing={2} textAlign="center">
             <Heading size="xl" color="mybluetext" fontSize="4xl">

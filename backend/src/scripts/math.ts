@@ -7,3 +7,5 @@ export const arrAverage = (arr: number[]) => {
 };
 export const percentageDiff = (first: number, second: number) =>
   ((first - second) / second) * 100;
+
+

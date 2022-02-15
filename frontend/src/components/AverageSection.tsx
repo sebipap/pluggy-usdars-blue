@@ -10,7 +10,8 @@ import {
   Center,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Average } from "../types";
+import { useReport } from "../useReport";
+import { Error } from "./Error";
 
 const PriceWrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -26,15 +27,7 @@ const PriceWrapper = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const Price = ({
-  name,
-  value,
-  onUpdate,
-}: {
-  name: string;
-  value: number;
-  onUpdate: boolean;
-}) => (
+const Price = ({ name, value }: { name: string; value: number }) => (
   <PriceWrapper>
     <Box py={4} px={12}>
       <Text color="brandtext" fontWeight="500" fontSize="2xl">
@@ -44,12 +37,7 @@ const Price = ({
         <Text color="brandtext" fontSize="3xl" fontWeight="600">
           $
         </Text>
-        <Text
-          color="brandtext"
-          fontSize="5xl"
-          fontWeight="900"
-          textDecoration={onUpdate ? "underline" : "none"}
-        >
+        <Text color="brandtext" fontSize="5xl" fontWeight="900">
           {value.toFixed(2)}
         </Text>
       </HStack>
@@ -57,21 +45,14 @@ const Price = ({
   </PriceWrapper>
 );
 
-interface AverageData {
-  average: Average;
-  loading: boolean;
-  lastUpdate: string;
-  onUpdate: boolean;
-}
+export const AverageSection = () => {
+  const { data, isLoading, isError } = useReport();
 
-export const AverageSection = ({
-  average,
-  loading,
-  lastUpdate,
-  onUpdate,
-}: AverageData) => {
-  const avgBuy = average.average_buy_price;
-  const avgSell = average.average_sell_price;
+  const update = data && data.update;
+  const average = data && data.average;
+
+  const avgBuy = average?.average_buy_price;
+  const avgSell = average?.average_sell_price;
 
   const spread = avgSell - avgBuy;
   const avgAverage = (avgBuy + avgSell) / 2;
@@ -85,10 +66,12 @@ export const AverageSection = ({
       borderWidth="1px"
       borderColor={"brandtext"}
       h={"fit-content"}
-      shadow={useColorModeValue("#ffb0f1 -1px 0px 50px 3px", "#320046 -1px 0px 50px 3px")}
-
+      shadow={useColorModeValue(
+        "#ffb0f1 -1px 0px 50px 3px",
+        "#320046 -1px 0px 50px 3px"
+      )}
     >
-      {loading ? (
+      {isLoading ? (
         <Center>
           <Spinner
             thickness="10px"
@@ -98,6 +81,8 @@ export const AverageSection = ({
             size={"xl"}
           />
         </Center>
+      ) : isError ? (
+        <Error />
       ) : (
         <>
           <VStack spacing={2} textAlign="center">
@@ -111,12 +96,12 @@ export const AverageSection = ({
             </Text>
           </VStack>
           <SimpleGrid columns={[1, 2]} spacing={{ base: 4, lg: 10 }} py={10}>
-            <Price name="Buy" value={avgBuy} onUpdate={onUpdate} />
-            <Price name="Sell" value={avgSell} onUpdate={onUpdate} />
+            <Price name="Buy" value={avgBuy} />
+            <Price name="Sell" value={avgSell} />
           </SimpleGrid>
 
           <Text fontSize="lg" color="brandtext">
-            Last update {lastUpdate}
+            Last update {new Date(update).toLocaleString()}
           </Text>
         </>
       )}

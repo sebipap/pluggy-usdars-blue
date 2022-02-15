@@ -13,13 +13,7 @@ import { iconsRoot } from "../config";
 import { Quote } from "../types";
 import { CardWrapper } from "./CardWrapper";
 
-export const QuoteCard = ({
-  quote,
-  onUpdate,
-}: {
-  quote: Quote;
-  onUpdate: boolean;
-}) => {
+export const QuoteCard = (quote: Quote) => {
   const {
     name,
     buy_price,
@@ -32,8 +26,7 @@ export const QuoteCard = ({
 
   return (
     <CardWrapper imgURL={imgURL}>
-
-      <Image src={imgURL} borderRadius={"full"} w={70}  my={4}/>
+      <Image src={imgURL} borderRadius={"full"} w={70} my={4} />
 
       <Heading size="lg" color={useColorModeValue("black", "white")}>
         {name}
@@ -49,11 +42,8 @@ export const QuoteCard = ({
             <StatLabel color={useColorModeValue("gray.800", "gray.300")}>
               Buy
             </StatLabel>
-            <StatNumber
-              color={useColorModeValue("gray.800", "gray.300")}
-              textDecoration={onUpdate ? "underline" : "none"}
-            >
-               {buy_price.toFixed(2)}
+            <StatNumber color={useColorModeValue("gray.800", "gray.300")}>
+              {buy_price.toFixed(2)}
             </StatNumber>
             <StatHelpText>
               {buy_price_slippage.toFixed(2)}% slippage
@@ -68,11 +58,8 @@ export const QuoteCard = ({
             <StatLabel color={useColorModeValue("gray.800", "gray.300")}>
               Sell
             </StatLabel>
-            <StatNumber
-              color={useColorModeValue("gray.800", "gray.300")}
-              textDecoration={onUpdate ? "underline" : "none"}
-            >
-               {sell_price.toFixed(2)}
+            <StatNumber color={useColorModeValue("gray.800", "gray.300")}>
+              {sell_price.toFixed(2)}
             </StatNumber>
             <StatHelpText>
               {sell_price_slippage.toFixed(2)}% slippage

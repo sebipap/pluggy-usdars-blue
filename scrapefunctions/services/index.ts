@@ -85,6 +85,6 @@ const fullReportOf = (quotes: Quote[]) => {
   return {
     average,
     fullQuotes,
-    update: new Date().toLocaleString("sp-AR"),
+    update: new Date().toUTCString()
   };
 };
