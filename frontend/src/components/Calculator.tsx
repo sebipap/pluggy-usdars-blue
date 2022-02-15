@@ -10,7 +10,6 @@ import {
   Input,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Average } from "../types";
 import { toInteger } from "lodash";
 import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import { useReport } from "../useReport";

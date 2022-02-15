@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid, Text, useQuery } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid} from "@chakra-ui/react";
 import { Quote } from "../types";
 import { useReport } from "../useReport";
 import { Error } from "./Error";
